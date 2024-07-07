@@ -12,7 +12,7 @@ window.onload = function() {
 	PAN.ramName();
 };
 
-var VERVAR = "1.0 - build 06.07.2024"
+var VERVAR = "1.01 - build 07.07.2024"
 
 var supportsVibrate = "vibrate" in navigator;
 
@@ -80,14 +80,18 @@ startEmu();
 
 document.addEventListener("visibilitychange", () => {
 	if (document.hidden) {
-		panelSwState(true);
+		if (POWER) {
+			panelSwState(true);
+		}
 		// Store RAM in local storage
 		window.localStorage.setItem('mk87_ram', btoa(String.fromCharCode.apply(null, RAM)));
 		WATCH.stop();
 		W_D_TSTAMP = new Date();
 	}
 	else{
-		panelSwState(false);
+		if (POWER) {
+			panelSwState(false);
+		}
 		if (typeof W_D_TSTAMP == "object") {
 			var ndate = new Date();
 			const diff = (ndate - W_D_TSTAMP);
