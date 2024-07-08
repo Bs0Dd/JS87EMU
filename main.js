@@ -12,7 +12,7 @@ window.onload = function() {
 	PAN.ramName();
 };
 
-var VERVAR = "1.02 - build 08.07.2024";
+var VERVAR = "1.02 - build 09.07.2024";
 
 var supportsVibrate = "vibrate" in navigator;
 

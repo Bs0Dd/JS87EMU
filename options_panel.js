@@ -154,12 +154,12 @@ function panelUnkFun() {
 
 
 function panelOpenHelp() {
-    window.open(`${BASEPATH}/help.html`,'targetWindow', `toolbar=no, location=no, status=no, menubar=no,
+    window.open(`${BASEPATH}/help.html`,'87_helpWindow', `toolbar=no, location=no, status=no, menubar=no,
         scrollbars=no, resizable=no, width=820, height=340`)
 }
 
 function panelOpenDbg() {
-    window.open(`${BASEPATH}/debug.html`,'targetWindow', `toolbar=no, location=no, status=no, menubar=no,
+    window.open(`${BASEPATH}/debug.html`,'87_debugWindow', `toolbar=no, location=no, status=no, menubar=no,
         scrollbars=no, resizable=no, width=820, height=340`)
 }
 
@@ -178,12 +178,12 @@ function panelSWDbgMsg(){
 }
 
 function panelOpenInfo() {
-    window.open(`${BASEPATH}/about.html`,'targetWindow', `toolbar=no, location=no, status=no, menubar=no,
+    window.open(`${BASEPATH}/about.html`,'87_aboutWindow', `toolbar=no, location=no, status=no, menubar=no,
         scrollbars=no, resizable=no, width=820, height=710`)
 }
 
 function panelOpenLay() {
-    window.open(`${BASEPATH}/layout.html`,'targetWindow', `toolbar=no, location=no, status=no, menubar=no,
+    window.open(`${BASEPATH}/layout.html`,'87_layoutWindow', `toolbar=no, location=no, status=no, menubar=no,
         scrollbars=no, resizable=no, width=820, height=340`)
 }
 
