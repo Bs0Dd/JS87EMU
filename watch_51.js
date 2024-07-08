@@ -170,12 +170,12 @@ function WATCH51(parentSVG) {
 
     function drawByMode(obj) {
         if (W51_mode == 0) {
-            segNumSet(obj, false, 1, W51_hour, true);
+            segNumSet(obj, false, 1, W51_hour, false);
             segNumSet(obj, false, 2, W51_minute, true);
             segNumSet(obj, true, 1, W51_day, false);
         }
         else if (W51_mode == 1) {
-            segNumSet(obj, false, 1, W51_hour, true);
+            segNumSet(obj, false, 1, W51_hour, false);
             segNumSet(obj, false, 2, W51_minute, true);
             segNumSet(obj, true, 1, W51_second, true);
         }
@@ -382,12 +382,12 @@ function WATCH51(parentSVG) {
         var v1, v2, v3;
 
         if (W51_mode == 3) {
-            v1 = [W51_hour, true];
+            v1 = [W51_hour, false];
             v2 = [W51_minute, true];
             v3 = [W51_day, false];
         }
         else if (W51_mode == 4) {
-            v1 = [W51_hour, true];
+            v1 = [W51_hour, false];
             v2 = [W51_minute, true];
             v3 = [W51_second, true];
         }

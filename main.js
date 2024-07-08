@@ -12,7 +12,7 @@ window.onload = function() {
 	PAN.ramName();
 };
 
-var VERVAR = "1.01 - build 07.07.2024"
+var VERVAR = "1.02 - build 08.07.2024";
 
 var supportsVibrate = "vibrate" in navigator;
 
@@ -31,7 +31,7 @@ var BASEPATH = "."; // Base path for files!
 
 var GUI = composeGUI();
 
-var WATCH = new WATCH51(GUI)
+var WATCH = new WATCH51(GUI);
 WATCH.run();
 var W_D_TSTAMP;
 
