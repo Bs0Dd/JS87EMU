@@ -20,7 +20,7 @@ function KBKeyPress(evt) {
 	var key = keyByCode(evt.keyCode);
 	if(typeof key == 'undefined') return;
 
-	evt.preventDefault();
+	if (evt.cancelable) evt.preventDefault();
 
 	if (key=="off" || key=="on") {
 		devicePower(key=="on");
@@ -54,7 +54,7 @@ function KBKeyRelease(evt) {
 	var key = keyByCode(evt.keyCode);
 	if(typeof key == 'undefined') return;
 
-	evt.preventDefault();
+	if (evt.cancelable) evt.preventDefault();
 
 	if (key=="onoff") {
 		trkey = false;
@@ -73,7 +73,7 @@ function KBKeyRelease(evt) {
 
 function GUIKeyPress(evt) {
 	var key = evt.currentTarget.id;
-	evt.preventDefault();
+	if (evt.cancelable) evt.preventDefault();
 	if(supportsVibrate && useVibrate) window.navigator.vibrate(100);
 
 	evt.currentTarget.children[0].setAttributeNS(null, "opacity", 0.5);
@@ -90,7 +90,7 @@ function GUIKeyPress(evt) {
 }
 
 function GUIKeyRelease(evt) {
-	evt.preventDefault();
+	if (evt.cancelable) evt.preventDefault();
 	var key = evt.currentTarget.id;
 
 	evt.currentTarget.children[0].setAttributeNS(null, "opacity", 0);
