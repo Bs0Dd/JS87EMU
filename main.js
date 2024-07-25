@@ -9,10 +9,12 @@
 window.onload = function() {
 	document.getElementById("mk87").appendChild(GUI);
 	document.getElementById("mk87_panel").appendChild(PAN);
+	document.getElementById("mk87_dbg").appendChild(DBG);
 	PAN.ramName();
+	//DBG.debugStart();
 };
 
-var VERVAR = "1.02 - build 09.07.2024";
+var VERVAR = "1.4 - build 25.07.2024"
 
 var supportsVibrate = "vibrate" in navigator;
 
@@ -38,6 +40,13 @@ var W_D_TSTAMP;
 var LCD = new MK85_SVG_LCD();
 var LCD_ANIMSPEED = 10;
 
+var DBG = new DBGTOOL();
+
+var DEBUG_STEPS = false;
+var BREAKPOINT = false;
+
+var ignorePowerOff = loadProperty('mk87_ignorepoff', false, true);
+
 var DEBUG = loadProperty('mk87_debugmsg', false, true);
 
 var PAN = new PANEL();
@@ -50,6 +59,7 @@ var RAM = null;
 var ROM = null;
 
 var POWER = true;
+var PAUSE_ON_HID = false;
 
 // Load RAM and ROM contents
 
@@ -73,7 +83,7 @@ if(ram == null) {
 }
 
 console.log("Loading internal ROM memory file");
-ROM = ROM_int;
+ROM = new Uint8Array(ROM_int); // Internal ROM image constant
 
 startEmu();
 
@@ -81,6 +91,7 @@ startEmu();
 document.addEventListener("visibilitychange", () => {
 	if (document.hidden) {
 		if (POWER) {
+			PAUSE_ON_HID = stopped;
 			panelSwState(true);
 		}
 		// Store RAM in local storage
@@ -89,7 +100,7 @@ document.addEventListener("visibilitychange", () => {
 		W_D_TSTAMP = new Date();
 	}
 	else{
-		if (POWER) {
+		if (POWER && !PAUSE_ON_HID) {
 			panelSwState(false);
 		}
 		if (typeof W_D_TSTAMP == "object") {

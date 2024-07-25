@@ -39,6 +39,27 @@
 <h2>Changelog</h2>
 
 <div style="text-align: left;">
+    <b>-> Version 1.4 - 25.07.2024</b>
+</div>
+<ul style="text-align: left;">
+    <li>"Debugger" tool introduced:
+        <ul>
+            <li>Execution control: pause, step by step (1 or more steps at a time), breakpoint at address</li>
+            <li>View and edit RAM in "bytes" and "words" modes</li>
+            <li>Viewing the state of processor registers (and special registers CPUCTRL, PP and KEYB)<br>and editing (except KEYB)</li>
+            <li>View disassembled data in ROM and RAM (lite-disasm11)<br>and replace it (lite-asm11) in memory (edited ROM is not saved on page reload)</li>
+            <li>Display data in hexadecimal or octal</li>
+        </ul>
+    </li>
+    <li>Added (previously missing) instructions MARK, ASHC, SXT and fixed a bug in ASH<br>(although the functionality of the operations is questionable; the firmware does not use them)</li>
+    <li>Added support for a software switch (12 bit in CPUCTRL),<br>the software auto-shutdown timer now works when there is no activity<br>(triggers after 3.5 minutes, the norm according to the instruction: 2-5 minutes)</li>
+    <li>The shape of the "1" segment on the display has been corrected,<br>the second dot on the clock has been increased</li>
+    <li>Pause no longer turns off when switching between tabs</li>
+    <li>Various minor bug fixes</li>
+</ul>
+
+<br>
+<div style="text-align: left;">
     <b>-> Version 1.02 - 09.07.2024</b>
 </div>
     <ul style="text-align: left;">

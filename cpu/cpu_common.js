@@ -38,10 +38,13 @@ function CPU() {
     this.flag_step		= false;
     this.flag_halt		= false;
     this.flag_evnt		= false;
+
+	this.ignorePowerOff = ignorePowerOff;
     
     /* gotta assign those before running anything */   
 	this.readCallback   = null;
     this.writeCallback  = null;
+	this.steps  = null;
 }
 
 CPU.prototype.access = function(addr,writeVal,isByte) {
@@ -89,6 +92,10 @@ CPU.prototype.execIOT = function(code) {
 	throw this.vectors.TRAP_IO;
 };
 
+CPU.prototype.execBPT = function(code) {
+	throw this.vectors.TRAP_T_BIT
+};
+
 CPU.prototype.execWAIT = function(code) {
 	this.flag_wait = true;
 	return CPU.prototype.execCode;
@@ -103,16 +110,23 @@ CPU.prototype.execCode = function() {
 	
 	if((this.cpuctrl&0x0400)==0) return CPU.prototype.execCode;
 
-	if(((this.cpuctrl&0x0800)==0) && !this.ignoreFreqDiv) {
-		if(this.freqDiv < 8)
+	if ((typeof BREAKPOINT == "number") && BREAKPOINT==this.reg_u16[7]) {
+		BREAKPOINT = -1;
+		return CPU.prototype.execCode;
+	}
+
+	if((((this.cpuctrl&0x0800)==0) || this.flag_reset) && (DEBUG_STEPS==false)) {
+		if(this.freqDiv < (this.flag_reset ? 80 : 8))
 		{
 			this.freqDiv++;
 			return CPU.prototype.execCode;
 		} else {
 			this.freqDiv = 0;
+			this.flag_reset = false;
 		}
 	} else {
 		this.freqDiv = 0;
+		this.flag_reset = false;
 	}
 
 	var shadowBuffer = this.regBuffer.slice();
@@ -145,7 +159,7 @@ CPU.prototype.execCode = function() {
 			this.vector = e;
 			return CPU.prototype.execVector;
 		} else {
-			for (var key in e) console.log("ERROR ",key,e[key]);
+			for (let key in e) console.log("ERROR ",key,e[key]);
 			throw e;
 		}
 	}

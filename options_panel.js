@@ -1,3 +1,9 @@
+// Options panel module
+// Panel with standard functions to configure emulator
+// (change RAM size, load from files, save to disk, press key combinations and etc.)
+
+// 2024 (c) Bs0Dd
+
 var stopped = false;
 
 var realConsoleLog = console.log;
@@ -14,6 +20,8 @@ function PANEL() {
 
     pnl.appendChild(dwram);
 
+    var ignp = ignorePowerOff ? "checked" : "";
+
     var dbgm = DEBUG ? "checked" : "";
 
     if (!DEBUG) {
@@ -26,6 +34,7 @@ function PANEL() {
             <button id="showk" onClick="panelShowKey()">Show key</button>
             <button id="eegg" onClick="panelShowEgg()">Easter egg</button>
             <button id="ufun" onClick="panelUnkFun()">Unknown function</button>
+            <button onClick="panelResetRoF()">Reset ROM</button>
             <button id="rstcl" onClick="panelResetWa()">Reset clock (11:11)</button>
             <button id="setrt" onClick="panelSetRTWa()">Set real time</button>`
 
@@ -44,14 +53,16 @@ function PANEL() {
 
     tabcont[1][1] = `<button onClick="panelOpenLay()">Keyboard layout</button> <button onClick="panelOpenDbg()">Debugger</button>
     <button onClick="panelOpenHelp()">Help</button> <button onClick="panelOpenInfo()">About</button><br>
-    <label for="dbgm">Show debug messages in console:</label> <input type="checkbox" onChange="panelSWDbgMsg()" id="dbgm" name="dbgm" ${dbgm}>`;
+    <label for="dbgm">Show debug messages in console:</label> <input type="checkbox" onChange="panelSWDbgMsg()" id="dbgm" name="dbgm" ${dbgm}><br>
+    <label for="ipoff">Disable soft poweroff (12 in cpuctrl):</label> <input type="checkbox" onChange="panelSwDivPo()" id="ipoff" name="ifrdiv" ${ignp}>`;
 
-    for (i=0; i < 2; i++){
+    for (let i=0; i < 2; i++){
         const row = document.createElement("tr");
-        for (c=0; c < 2; c++) {
+        for (let c=0; c < 2; c++) {
 
             const td = document.createElement("td");
             td.id = `cl${i}-${c}`;
+            //td.style.lineHeight = "1.8";
 
             if (typeof tabcont[i][c] != "undefined") {
                 td.innerHTML = tabcont[i][c];
@@ -105,13 +116,15 @@ function panelClrMem() {
     PAN.ramName();
 
     if (stopped) {
-        document.getElementById("stst").innerText="Pause"
-	    stopped = false;
+        panelUnStop();
     }
 
     if (POWER){
         MK85CPU = new CPU();
         startEmu();
+        if (document.getElementById("mk87_dbg_int").style.display == "") {
+            debugUpdate();
+        }
     }
 
 }
@@ -154,15 +167,31 @@ function panelUnkFun() {
 
 
 function panelOpenHelp() {
-    window.open(`${BASEPATH}/help.html`,'87_helpWindow', `toolbar=no, location=no, status=no, menubar=no,
+    window.open(`${BASEPATH}/help/help.html`,'87_helpWindow', `toolbar=no, location=no, status=no, menubar=no,
         scrollbars=no, resizable=no, width=820, height=340`)
 }
 
 function panelOpenDbg() {
-    window.open(`${BASEPATH}/debug.html`,'87_debugWindow', `toolbar=no, location=no, status=no, menubar=no,
-        scrollbars=no, resizable=no, width=820, height=340`)
+    const hidp = document.getElementById("mk87_dbg_int");
+    hidp.style.display = (hidp.style.display == "none") ? "" : "none";
+    document.getElementById("mk87_dbg_br").style.display = hidp.style.display;
+    if (hidp.style.display == "" && !stopped) {
+        DBG.debugStart();
+    }
+    else if (hidp.style.display == "" && stopped) {
+        debugUpdate();
+        debugUpdRegIn();
+    }
+    else{
+        DBG.debugStop();
+    }
 }
 
+function panelSwDivPo() {
+    ignorePowerOff = document.getElementById("ipoff").checked;
+    MK85CPU.ignorePowerOff = ignorePowerOff;
+    window.localStorage.setItem('mk87_ignorepoff', ignorePowerOff);
+}
 
 function panelSWDbgMsg(){
     DEBUG = !DEBUG;
@@ -191,6 +220,32 @@ function panelSwVibro() {
     useVibrate = !useVibrate;
     document.getElementById("vib").checked = useVibrate;
     window.localStorage.setItem('mk87_vibro', useVibrate);
+}
+
+function panelUnStop() {
+    if (document.getElementById("mk87_dbg_int").style.display == "") {
+        DBG.debugStart();
+    }
+    document.getElementById("stst").innerText="Pause";
+    document.getElementById("dstst").innerText="Pause";
+
+    document.getElementById("dbst").disabled = true;
+    document.getElementById("dbsts").disabled = true;
+    document.getElementById("dbbr").disabled = true;
+    document.getElementById("regist").disabled = true;
+    document.getElementById("reged").disabled = true;
+    document.getElementById("edreg").disabled = true;
+    
+    document.getElementById("disu").disabled = true;
+    document.getElementById("dispu").disabled = true;
+    document.getElementById("disgo").disabled = true;
+    document.getElementById("disgob").disabled = true;
+    document.getElementById("dispd").disabled = true;
+    document.getElementById("disd").disabled = true;
+    document.getElementById("disr").disabled = true;
+    document.getElementById("dised").disabled = true;
+    document.getElementById("diss").disabled = true;
+    stopped = false;
 }
 
 function panelSaveRaF(){
@@ -228,14 +283,13 @@ function panelLoadRaF() {
     const reader = new FileReader();
 
     reader.onload = function() {
-        console.log(reader.result)
+        //console.log(reader.result)
 
         if (POWER) {
             LCD.stopAnimating();
             LCD.clearScreen();
             if (stopped) {
-                document.getElementById("stst").innerText="Pause"
-                stopped = false;
+                panelUnStop();
             }
         }
 
@@ -248,6 +302,9 @@ function panelLoadRaF() {
         if (POWER) {
             MK85CPU = new CPU();
             startEmu();
+            if (document.getElementById("mk87_dbg_int").style.display == "") {
+                debugUpdate();
+            }
         }
     };
 
@@ -259,8 +316,7 @@ function panelDevRestart() {
     LCD.clearScreen();
 
     if (stopped) {
-        document.getElementById("stst").innerText="Pause"
-	    stopped = false;
+        panelUnStop();
     }
 
     MK85CPU = new CPU();
@@ -281,9 +337,67 @@ function panelSwState(stat) {
     if (!stopped) {
         LCD.animate(LCD_ANIMSPEED);
         document.getElementById("stst").innerText="Pause";
+        document.getElementById("dstst").innerText="Pause";
+        if (document.getElementById("mk87_dbg_int").style.display == "") {
+            DBG.debugStart();
+        }
     }
     else {
         LCD.stopAnimating();
         document.getElementById("stst").innerText="Resume";
+        document.getElementById("dstst").innerText="Resume";
+        if (document.getElementById("mk87_dbg_int").style.display == "") {
+            DBG.debugStop();
+            debugUpdRegIn();
+            debugUpdate();
+        }
+        
+    }
+
+    document.getElementById("dbst").disabled = !stopped;
+	document.getElementById("dbsts").disabled = !stopped;
+	document.getElementById("dbbr").disabled = !stopped;
+    document.getElementById("regist").disabled = !stopped;
+    document.getElementById("reged").disabled = !stopped;
+    document.getElementById("edreg").disabled = !stopped;
+
+    document.getElementById("disu").disabled = !stopped;
+    document.getElementById("dispu").disabled = !stopped;
+    document.getElementById("disgo").disabled = !stopped;
+    document.getElementById("disgob").disabled = !stopped;
+    document.getElementById("dispd").disabled = !stopped;
+    document.getElementById("disd").disabled = !stopped;
+    document.getElementById("disr").disabled = !stopped;
+    document.getElementById("dised").disabled = !stopped;
+    document.getElementById("diss").disabled = !stopped;
+}
+
+function panelEditFocus() {
+    window.removeEventListener('keydown', KBKeyPress, true);
+    window.removeEventListener('keyup', KBKeyRelease, true);
+} 
+
+function panelEditNoFocus() {
+    window.addEventListener('keydown', KBKeyPress, true);
+    window.addEventListener('keyup', KBKeyRelease, true);
+}
+
+function panelResetRoF() {
+    if (POWER) {
+        LCD.stopAnimating();
+        LCD.clearScreen();
+        if (stopped) {
+            panelUnStop();
+        }
+    }
+
+    ROM = new Uint8Array(ROM_int); // Internal ROM image constant
+
+    if (POWER) {
+        MK85CPU = new CPU();
+        startEmu();
+        if (document.getElementById("mk87_dbg_int").style.display == "") {
+            debugUpdate();
+        }
     }
 }

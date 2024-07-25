@@ -38,7 +38,7 @@ function WATCH51(parentSVG) {
         w_sec_create7SegDisplay(svg, 68, 34),
     ];
 
-    this.dot = w_createDot(svg, 38, 24, 2, 3);
+    this.dot = w_createDot(svg, 37.3, 23, 3, 4);
 
     w_createTextField(svg, 7.6, 43.7, "П", 8);
     w_createTextField(svg, 13.6, 42, ".", 12);
@@ -62,6 +62,7 @@ function WATCH51(parentSVG) {
 	W51_bt1.setAttributeNS(null,'y','221');
 	W51_bt1.setAttributeNS(null, 'visibility', 'visible');
     W51_bt1.setAttributeNS(null,"opacity",0);
+    W51_bt1.setAttributeNS(null,"cursor","pointer");
     W51_bt1.onmousedown = function() {W51_bt1p = true; this.setAttributeNS(null,"opacity",1);};
     W51_bt1.onmouseup = function() {W51_bt1p = false; this.setAttributeNS(null,"opacity",0);};
 	parentSVG.appendChild(W51_bt1);
@@ -72,6 +73,7 @@ function WATCH51(parentSVG) {
 	W51_bt2.setAttributeNS(null,'y','276');
 	W51_bt2.setAttributeNS(null, 'visibility', 'visible');
     W51_bt2.setAttributeNS(null,"opacity",0);
+    W51_bt2.setAttributeNS(null,"cursor","pointer");
     W51_bt2.onmousedown = function() {W51_bt2p = true; this.setAttributeNS(null,"opacity",1);};
     W51_bt2.onmouseup = function() {W51_bt2p = false; this.setAttributeNS(null,"opacity",0);};
 	parentSVG.appendChild(W51_bt2);

@@ -51,7 +51,7 @@ function MK85_SVG_LCD() {
 
 	this.characters = [];
 /* create 12 character places */
-	for (var x = 0; x < 12; x++)
+	for (let x = 0; x < 12; x++)
 		this.characters.push(createDotMatrix(this.svg,7,5,x_offset+x*((3.1)*7),y_offset,2,3,1,1,segmentOn,segmentOff));
 
 /* array to sort out extra mappings */
@@ -70,7 +70,7 @@ function MK85_SVG_LCD() {
 
 /* create 7Seg digits */
 
-	for (var x = 0; x < sevenSegsMapping.length; x++) {
+	for (let x = 0; x < sevenSegsMapping.length; x++) {
 		// create seven-segment digit and get array of functions to access its segments
 		xrd = (x==4) ? 151.4+x*19 : ((x==3) ? 158.2+(x*19) : 163.2+(x*19));
 
@@ -89,8 +89,8 @@ function MK85_SVG_LCD() {
 	// create LCD memory mapping for addresses
 	this.mapping = Array.apply(null, Array(videoMemorySize));
 
-	for (var x = 0; x<this.characters.length; x++) {
-		for (var y = 0; y<this.characters[x].length; y++) {
+	for (let x = 0; x<this.characters.length; x++) {
+		for (let y = 0; y<this.characters[x].length; y++) {
 			this.mapping[(x<<3)+y+1] = this.characters[x][y];
 		}
 	}
@@ -264,7 +264,7 @@ function create7SegDisplay(root, x, y, oneSeg) {
 		f:{img:"bitmaps/f.png", x:-0.3, y:2.5, height:5.4},
 		g:{img:"bitmaps/g.png", x:1.4, y:8.2, height:2}
 	} : {
-		a:{img:"bitmaps/one.png", x:0.6, y:0.6, height:16.3},
+		a:{img:"bitmaps/one.png", x:0.8, y:1.4, height:15.1},
 	};
 
 	var arr = {};
