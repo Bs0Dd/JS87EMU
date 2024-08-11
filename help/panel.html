@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JS87EMU Help</title>
+<meta charset="UTF-8">
+<style>
+    body {text-align: center;}
+
+    .menulink {
+        padding-left: 10px;
+        padding-right: 10px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>JS87EMU Help</h1>
+
+<h3><a href="panel_ru.html">Русский</a></h3>
+
+<hr>
+<h3 style="margin-top: 5px;margin-bottom: 5px;">Menu</h3>
+<a class="menulink" href="help.html">Main page</a>
+<a class="menulink" href="interface.html">Emulator interface</a><br>
+<span class="menulink">Working with the options panel</span>
+<a class="menulink" href="debug.html">Working with the Debugger</a><br>
+<a class="menulink" href="sim.html">Working with the "Elektronika 51" watch simulator</a><br>
+<a class="menulink" href="faq.html">Frequently asked questions (FAQ)</a>
+<hr>
+
+<h3>Options panel</h3>
+
+<img src="panel.png" alt="panel"><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Options panel</b> is a tool for <b>configuring</b> and <b>managing</b> the emulator,
+    allowing you to modify <b>basic parameters</b> that affect the behavior of the <b>virtual note book</b>.<br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The panel consists of <b>4 sections</b> with parameters grouped by <b>common feature</b>.
+</p><br>
+
+<h4>Main functions section</h4>
+
+<img src="p1.png" alt="p1"><br>
+ 
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;This panel contains the <b>main buttons</b> for calling some <b>functions</b> of the notebook.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Init memory"</b> button corresponds to pressing the key combination <b>"СИ"+"С"(not a letter)+"СК"</b>,
+    starting the process of <b>resetting</b> the note book to the <b>initial</b> state.
+    Required if you need to <b>delete all entries</b> from the note book or <b>initialize</b> a clean RAM image.
+    When pressed, the message <b>"** СБРОС! **"</b> (Reset) appears on the screen for <b>several seconds</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Show key"</b> button corresponds to pressing the <b>undocumented</b> key combination <b>"СИ"+"СК"+"4"</b>,
+    in which the notebook shows the <b>secret word</b> set by the user for the <b>protected information sector</b>.
+    If the word <b>is not set</b>, the message <b>"СЕКРЕТА НЕТ"</b> (No Secret) will appear on the screen. To exit, press the <b>"С" key (not a letter)</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Easter egg"</b> button corresponds to pressing the <b>undocumented</b> key combination <b>"С"(not a letter)+"СК"+"К"</b>
+    which activates the <b>"Easter egg"</b> (there is a similar one in <b>MK 85</b> by the <b>WHO</b> command),
+    which displays the line <b>"ПРОГРАММУ РАЗРАБОТАЛ ПОДОРОВ А.Н."</b> (The program was developed by Podorov A.N.). To exit, press the <b>"С" key (not a letter)</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Unknown function"</b> button corresponds to pressing the <b>undocumented</b> key combination <b>"С"(not a letter)+"СК"+"Н"</b>,
+    which is <b>defined</b> in the firmware, but its purpose is currently <b>unknown</b>. Perhaps, some <b>action</b> was planned for this combination,
+    but in the end it was <b>not implemented</b>, leaving only a <b>reserved</b> combination in the code.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Reset ROM"</b> button allows you to <b>reset</b> the state of the <b>ROM</b>
+    to the factory default if the contents <b>were changed</b> using <b>lite-assembler</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Reset Clock (11:11)"</b> button corresponds to pressing <b>two buttons</b> on the <b>clock module</b>, which causes it to <b>reset</b>.
+    According to the <b>instructions</b>, when resetting the clock the following values are set:
+    <b>11</b> hours, <b>11</b> minutes, <b>11</b> seconds, <b>11</b> day, <b>11</b> month, <b>11</b> year, day of the week - <b>Monday</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Set real time"</b> button sets the <b>current system time</b> on the clock.
+
+</p><br>
+
+<h4>Control section</h4>
+
+<img src="p2.png" alt="p2"><br>
+ 
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;The section is used to <b>control</b> the emulator and switch <b>general functions</b>.
+    The <b>"Pause"</b> and <b>"Restart"</b> buttons, as the name suggests, are used to <b>pause</b> and <b>restart</b> the emulator.
+    The <b>"Vibro (keys)"</b> parameter enables or disables <b>device vibration</b> (if it <b>can</b> vibrate, which usually applies to <b>portable devices</b>)
+    when pressing the <b>virtual keyboard</b> of the address book. On devices <b>without vibration capability</b>, the item does not perform <b>any</b> function.
+</p><br>
+
+<h4>Data loading and saving section</h4>
+
+<img src="p3.png" alt="p3"><br>
+ 
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;In this section you can <b>load</b> or <b>save</b> the <b>RAM</b> of the virtual note book.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"RAM file"</b> field displays the <b>name</b> of the loaded RAM file.
+    The <b>"internal"</b> caption is displayed if the <b>RAM image</b> was created using the <b>"Clear RAM"</b> button.
+    When creating <b>clean RAM</b> with the <b>"Clear RAM"</b> button, you need to <b>initialize the memory</b> by holding down the <b>"СИ" + "С" (not a letter) + "СК"</b>
+    key combination or <b>simulating</b> pressing them with the <b>"Init memory"</b> button in the <b>main functions</b> section. The <b>"** СБРОС! **"</b> (Reset)
+    message will light up on the screen for <b>several</b> seconds.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;To load RAM from a <b>binary file</b>, just <b>select the file</b> (using the <b>button</b> or via <b>Drag'n'Drop</b>)
+    and press the <b>"Load RAM from file"</b> button. The file <b>must</b> be <b>2KB</b>.
+    If the <b>condition</b> is not met, the image will be automatically reduced to <b>2KB</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;You can get the <b>binary file</b> of the <b>RAM</b> image by clicking the <b>"Save RAM"</b> button, and the browser will download the <b>"mk87_ram.bin"</b> file.<br>
+</p><br>
+
+<h4>Additional functions section</h4>
+
+<img src="p4.png" alt="p4"><br>
+ 
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;The section contains buttons for opening <b>utilities</b> and information <b>windows</b>, as well as <b>debugging</b> parameters.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Keyboard layout"</b> button opens a window with a <b>layout scheme</b> of a computer keyboard, <b>adapted</b> for working with a virtual note book.
+    The <b>"Debugger"</b> button opens, respectively, the <a href="debug.html"><b>Debugger</b></a> panel.
+    The <b>"Help"</b> button opens a window with this <b>help</b>.
+    And the <b>About</b> button is a window with <b>brief information</b> about the program and <b>a list of changes</b> (<b>Changelog</b>).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Show debug messages"</b> parameter enables the display of <b>debug messages</b> in the console (via the <b>console.log</b> function).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Disable soft poff"</b> parameter disables support for the <b>software switch</b> present in the processor,
+    which allows the firmware to <b>turn off</b> the device. In <b>MK 87</b> software shutdown <b>occurs</b> according to a software-implemented <b>timer</b> that counts the time until shutdown.
+    Since the firmware <b>never</b> stops the <b>clock generator</b> of the processor (unlike <b>MK 85</b>),
+    the <b>keyboard polling</b> program is constantly running, which, in the absence of a pressed key, <b>decreases</b> the timer counter (when a key is pressed, the timer <b>is reset</b>).
+    After about <b>3.5 minutes</b> the timer <b>runs out</b> and the device <b>automatically turns off</b> as a result of a long <b>inactivity</b>.
+</p>
+
+<hr>
+<h3 style="margin-top: 5px;margin-bottom: 5px;">Menu</h3>
+<a class="menulink" href="help.html">Main page</a>
+<a class="menulink" href="interface.html">Emulator interface</a><br>
+<span class="menulink">Working with the options panel</span>
+<a class="menulink" href="debug.html">Working with the Debugger</a><br>
+<a class="menulink" href="sim.html">Working with the "Elektronika 51" watch simulator</a><br>
+<a class="menulink" href="faq.html">Frequently asked questions (FAQ)</a>
+<hr>
+
+</body>
+</html> 

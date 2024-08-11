@@ -14,7 +14,7 @@ window.onload = function() {
 	//DBG.debugStart();
 };
 
-var VERVAR = "1.4 - build 25.07.2024"
+var VERVAR = "1.5 - build 12.08.2024"
 
 var supportsVibrate = "vibrate" in navigator;
 

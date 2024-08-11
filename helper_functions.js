@@ -120,13 +120,16 @@ var PP = 0;	// CPU parallel port (not used in firmware)
 
 // Attach CPU to everything else
 function glueCPU() {
+
+	var ramLastAddr = 0x2000+RAM.length;
+	var romLastAddr = 0x0000+ROM.length;
 	
 	MK85CPU.readCallback = function (addr) {
 		if((addr&0xfffe)==0x0100) return (keysRead()>>((addr&1)?8:0))&0xff;
-		if(addr<0x2000) return ROM[addr&0x1FFF];
-		if((addr>=0x2000)&&(addr<0x2800)) return RAM[addr&0x1FFF];
+		if((addr<0x2000)&&(addr<romLastAddr)) return ROM[addr];
+		if((addr>=0x2000)&&(addr<ramLastAddr)) return RAM[addr&0x1FFF];
 		// keyboard column regs
-		return 0;
+		return 0xFF;
 	};
 
 	MK85CPU.writeCallback = function (addr, byteVal) {

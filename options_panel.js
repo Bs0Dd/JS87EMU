@@ -54,7 +54,7 @@ function PANEL() {
     tabcont[1][1] = `<button onClick="panelOpenLay()">Keyboard layout</button> <button onClick="panelOpenDbg()">Debugger</button>
     <button onClick="panelOpenHelp()">Help</button> <button onClick="panelOpenInfo()">About</button><br>
     <label for="dbgm">Show debug messages in console:</label> <input type="checkbox" onChange="panelSWDbgMsg()" id="dbgm" name="dbgm" ${dbgm}><br>
-    <label for="ipoff">Disable soft poweroff (12 in cpuctrl):</label> <input type="checkbox" onChange="panelSwDivPo()" id="ipoff" name="ifrdiv" ${ignp}>`;
+    <label for="ipoff">Disable soft poff (bit 12 in cpuctrl):</label> <input type="checkbox" onChange="panelSwDivPo()" id="ipoff" name="ifrdiv" ${ignp}>`;
 
     for (let i=0; i < 2; i++){
         const row = document.createElement("tr");
@@ -168,17 +168,18 @@ function panelUnkFun() {
 
 function panelOpenHelp() {
     window.open(`${BASEPATH}/help/help.html`,'87_helpWindow', `toolbar=no, location=no, status=no, menubar=no,
-        scrollbars=no, resizable=no, width=820, height=340`)
+        scrollbars=no, resizable=no, width=820, height=660`)
 }
 
 function panelOpenDbg() {
-    const hidp = document.getElementById("mk87_dbg_int");
+    const hidp = document.getElementById("mk85_dbg_int");
     hidp.style.display = (hidp.style.display == "none") ? "" : "none";
-    document.getElementById("mk87_dbg_br").style.display = hidp.style.display;
-    if (hidp.style.display == "" && !stopped) {
+    document.getElementById("mk85_dbg_br").style.display = hidp.style.display;
+    var active = (!stopped && POWER);
+    if (hidp.style.display == "" && active) {
         DBG.debugStart();
     }
-    else if (hidp.style.display == "" && stopped) {
+    else if (hidp.style.display == "" && !active) {
         debugUpdate();
         debugUpdRegIn();
     }
@@ -275,10 +276,6 @@ function panelLoadRaF() {
     if (typeof ramf == "undefined") {
         return;
     }
-    else if (ramf.size != 2048) {  // 2KB max size for firmware
-		alert("File size must be equal to 2KB");
-        return;
-	}
 
     const reader = new FileReader();
 
@@ -294,6 +291,18 @@ function panelLoadRaF() {
         }
 
         RAM = new Uint8Array(reader.result);
+
+        if (RAM.length > 2048) {  // 2KB max size for firmware
+            RAM = RAM.subarray(0, 2048);
+            console.log("Maximum RAM memory size (for firmware) is 2KB, memory area reduced");
+        }
+        else if (RAM.length % 2048 != 0) {  // Real processor uses a RAM chips multiple of 2KB min
+            var nRAM = new Uint8Array((Math.floor(RAM.length / 2048)+1)*2048);
+            nRAM.set(RAM);
+            RAM = nRAM;
+            console.log(`The RAM size must be a multiple of 2KB, increasing the area to ${RAM.length / 1024}KB.`);
+        }
+
         ramname = ramf.name;
         window.localStorage.setItem('mk87_ram', btoa(String.fromCharCode.apply(null, RAM)));
         window.localStorage.setItem('mk87_ramname', ramname);

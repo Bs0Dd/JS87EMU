@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JS87EMU Help</title>
+<meta charset="UTF-8">
+<style>
+    body {text-align: center;}
+
+    .menulink {
+        padding-left: 10px;
+        padding-right: 10px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>JS87EMU Help</h1>
+
+<h3><a href="sim_ru.html">Русский</a></h3>
+
+<hr>
+<h3 style="margin-top: 5px;margin-bottom: 5px;">Menu</h3>
+<a class="menulink" href="help.html">Main page</a>
+<a class="menulink" href="interface.html">Emulator interface</a><br>
+<a class="menulink" href="panel.html">Working with the options panel</a>
+<a class="menulink" href="debug.html">Working with the Debugger</a><br>
+<span class="menulink">Working with the "Elektronika 51" watch simulator</span><br>
+<a class="menulink" href="faq.html">Frequently asked questions (FAQ)</a>
+<hr>
+
+<h3>Simulator of the clock module "Elektronika 51"</h3>
+
+<img src="watch51.png" alt="watch"><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;In the real <b>MK 87</b>, in addition to the <b>device</b> itself, a separate <b>watch module</b>
+    from the <b>"Elektronika 51"</b> wristwatch is installed (not to be confused with the <b>MK 51</b>).
+    The only <b>difference</b> is the absence of <b>backlight</b> and, accordingly, <b>button 3</b> for it.
+    You can learn about working with the <b>watch module</b> from both the
+    <a href="http://mk.bs0dd.net/mk87/mk-87_ins.djvu" target="_blank"><b>instruction manual</b></a>
+    for MK 87 and from the <a href="http://mk.bs0dd.net/mk87/el51_pasp.pdf" target="_blank"><b>passport</b></a> for the watch itself.
+    Unfortunately, there is only a <b>Russian</b> version of the documentation, which makes it <b>difficult</b> for foreign users to understand.
+    However, the main <b>essence</b> of <b>working</b> with the watch is <b>described</b> on this <b>page</b>.<br><br>
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"watch_51"</b> module, written in <b>JavaScript</b>,
+    simulates the <b>behavior</b> of this watch, including all the <b>modes</b> present.
+    Since this is a <u><b>simulator</b></u> (i.e. it uses its own <b>pseudo-microprogram</b> for work,
+    and not the native <b>algorithms</b> of the clock microchip), its simulation may be <b>not entirely accurate</b> (especially since I <b>don't have</b> this clock).
+</p><br>
+
+<h4>Working with clock</h4>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>The display</b> of the watch module consists of <b>3 groups</b> of seven-segment indicators (two <b>large</b> and one <b>small</b>),
+    a <b>second point</b>, as well as a <b>line</b> of 7 segments displaying the <b>day of the week</b> (starting with <b>Monday</b>).<br><br>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;The module has <b>two buttons</b>. The first one switches <b>display modes</b> and <b>changes values</b> during setup.
+    The second one turns on <b>setting mode</b> and allows you to switch between <b>values</b>.
+</p>
+<img src="wbts.png" alt="wbts"><br><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>By default</b>, each time the <b>page</b> is loaded, the clock is set to the current <b>system time</b>
+    and the <b>first</b> display mode is set (in the MK 87 manual it is called the <b>additional</b> mode) - <b>hours</b>, <b>minutes</b>, <b>day of the month</b>.
+</p>
+
+<table style="margin-left: auto; margin-right: auto;border-spacing: 25px 0px;">
+    <tr>
+        <td><img src="watch51.png" alt="watch"></td>
+        <td><img src="watch51-2.png" alt="watch2"></td>
+        <td><img src="watch51-3.png" alt="watch3"></td>
+    </tr>
+    <tr>
+        <td><i><b>mode 1</b><br><b>(additional)</b><br>hours, minutes, day of the month<br>(the second dot is blinking)</i></td>
+        <td><b><i>mode 2</b><br><b>(main)</b><br>hours, minutes, seconds<br>(the second dot is constantly lit)</i></td>
+        <td><b><i>mode 3</b><br><b>(calendar)</b><br>day of the month, month, year<br>(the second dot is not lit)</i></td>
+    </tr>
+</table><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Modes 1</b> and <b>2</b> can be turned on <b>permanently</b>, while <b>mode 3</b>
+    is turned on only for <b>2 seconds</b>, after which it <b>returns</b> to <b>mode 1</b>.<br><br>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;When entering <b>setting mode</b>, the value being changed starts <b>flashing</b>, it can be <b>increased</b> by pressing <b>button 1</b>.
+    Switching between <b>values</b> is done by <b>button 2</b> and occurs in the <b>following order</b> (after the <b>day of the week</b> the mode <b>turns off</b>):
+</p>
+<img src="edroute.png" alt="edroute"><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;After <b>12 seconds</b> (the instruction indicate <b>8</b>, but according to <b>owners</b> measurements, this happens after <b>12 seconds</b>)
+    of <b>inactivity</b> the setup mode <b>automatically switches off</b>.
+    The only exception is <b>seconds correction</b>, which <b>does not result</b> in exiting the mode. When <b>button 1</b> is pressed, the <b>seconds</b> counter is reset to <b>0</b>,
+    and if <b>the number of seconds</b> was <b>30 or more</b>, <b>one minute is added</b> along with the reset.<br><br>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;From the <b>options panel</b> you can <b>reset the clock</b> (as if <b>both buttons</b> were pressed at once),
+    for this purpose use the <b>"Reset clock (11:11)"</b> button.
+    According to the <b>instruction</b>, when resetting the watch, the following values are set:
+    <b>11</b> hours, <b>11</b> minutes, <b>11</b> seconds, <b>11</b> day, <b>11</b> month, <b>11</b> year, day of the week - <b>Monday</b>.
+</p>
+<img src="clrst.png" alt="clrst">
+<img src="clrst2.jpg" alt="clrst2"><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;The <b>"Set real time"</b> button sets the <b>current system time</b> on the clock, in case you <b>knocked it down</b> during <b>setting up</b>.
+</p>
+
+<hr>
+<h3 style="margin-top: 5px;margin-bottom: 5px;">Menu</h3>
+<a class="menulink" href="help.html">Main page</a>
+<a class="menulink" href="interface.html">Emulator interface</a><br>
+<a class="menulink" href="panel.html">Working with the options panel</a>
+<a class="menulink" href="debug.html">Working with the Debugger</a><br>
+<span class="menulink">Working with the "Elektronika 51" watch simulator</span><br>
+<a class="menulink" href="faq.html">Frequently asked questions (FAQ)</a>
+<hr>
+
+</body>
+</html> 

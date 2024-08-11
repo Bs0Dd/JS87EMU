@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JS87EMU Help</title>
+<meta charset="UTF-8">
+<style>
+    body {text-align: center;}
+
+    .menulink {
+        padding-left: 10px;
+        padding-right: 10px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>JS87EMU Help</h1>
+
+<h3><a href="faq_ru.html">Русский</a></h3>
+
+<hr>
+<h3 style="margin-top: 5px;margin-bottom: 5px;">Menu</h3>
+<a class="menulink" href="help.html">Main page</a>
+<a class="menulink" href="interface.html">Emulator interface</a><br>
+<a class="menulink" href="panel.html">Working with the options panel</a>
+<a class="menulink" href="debug.html">Working with the Debugger</a><br>
+<a class="menulink" href="sim.html">Working with the "Elektronika 51" watch simulator</a><br>
+<span class="menulink">Frequently asked questions (FAQ)</span>
+<hr>
+
+<h3>Frequently asked questions (FAQ)</h3>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Q:</b> How to use the note book? Can not understand anything!<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>A:</b> Read the <a href="http://mk.bs0dd.net/mk87/mk-87_ins.djvu" target="_blank"><b>instruction manual</b></a> for the MK 87,
+    it explains the principles of operation of the device's software (to be honest, it is quite counterintuitive). Unfortunately, there is only a Russian version of the manual,
+    which makes it difficult for foreign users to understand. The translation of images does not provide 100% accuracy, so for simplicity,
+    you can also study the manual of the "prototype" device - <a href="http://mk.bs0dd.net/mk87/pf3000.pdf" target="_blank"><b>Casio PF-3000</b></a>.
+    While the MK87 lacks some features and there are some differences in the operation of the system,
+    much of the MK87 documentation is clearly borrowed from the PF-3000 documentation.
+</p>
+
+<img src="manual.jpg" alt="manual" height=230px"><br><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Q:</b> Why does the message "** СБРОС! **" (Reset) appear on the note book screen for a few seconds when I first launch the emulator?<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>A:</b> When you first start the emulator, a clean RAM image is always created, which needs to be initialized.
+    In MK 85, the initialization operation ("initial settings") is also performed, but if in a microcomputer it happens quickly,
+    then in a note book it takes more time, so the user has time to notice the reset message, there is nothing wrong with that.
+</p>
+<img src="sbros.png" alt="sbros"><br><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Q:</b> How to switch the case of letters in the notebook?<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>A:</b> No way. Unlike MK 85, the MK 87 character table only has capital Cyrillic letters, so even Latin letters cannot be used.
+</p><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Q:</b> Why can't I set more than 2KB of RAM for note book?<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>A:</b> Actually, it is possible, but it makes no sense, since the firmware is designed exclusively for 2KB RAM,
+    so increasing the size will not have any effect. The book will still show that 1810 characters are available for entries.
+</p><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Q:</b> Why can't I load ROM from a binary file into my notebook?<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>A:</b> The MK 85 has the ability to load ROMs because there are several versions of third-party ROMs developed by enthusiasts in the late 2000s.
+    The MK 87 is a very rare device (compared to the 85), so it is unlikely that anyone would want to make a third-party ROM for it, especially since it is not a universal microcomputer.
+</p><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Q:</b> Why does the reset button on the clock module set all values ​​to 11?<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>A:</b> According to the instruction, when resetting the watch, the following readings are set:
+    11 hours, 11 minutes, 11 seconds, 11 day, 11 month, 11 year, day of the week - Monday.
+</p>
+<img src="clrst.png" alt="clrst">
+<img src="clrst2.jpg" alt="clrst2"><br><br>
+
+<p style="text-align: left;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>Q:</b> Why does the note book turn off after some time?<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>A:</b> The thing is that the note book has an automatic power-off system when it is not used for a long time.
+    Switching off occurs according to a software-implemented timer that counts the time until switching off.
+    Since the firmware never stops the processor clock generator (unlike the MK 85), the keyboard polling program is constantly running, which,
+    if there is no key pressed, decreases the timer counter (when a key is pressed, the timer is reset).
+    After approximately 3.5 minutes, the timer will run out and the device will automatically turn off due to prolonged inactivity.
+</p>
+<img src="aoff.png" alt="aoff"><br><br>
+
+<hr>
+<h3 style="margin-top: 5px;margin-bottom: 5px;">Menu</h3>
+<a class="menulink" href="help.html">Main page</a>
+<a class="menulink" href="interface.html">Emulator interface</a><br>
+<a class="menulink" href="panel.html">Working with the options panel</a>
+<a class="menulink" href="debug.html">Working with the Debugger</a><br>
+<a class="menulink" href="sim.html">Working with the "Elektronika 51" watch simulator</a><br>
+<span class="menulink">Frequently asked questions (FAQ)</span>
+<hr>
+
+</body>
+</html> 

@@ -10,17 +10,15 @@ function uniqueFromTwoArrays(arr1, arr2) {
 }
 
 function keysRead() {
-	
-	var lastElem = uniquesPressed[uniquesPressed.length-1];
 
-	var cols = ((typeof lastElem != 'undefined')&&(lastElem in keyTable))?keyTable[lastElem]:keyTable["nokey"]
-	if((lastElem=="power")) 
-	{
-		MK85CPU.flag_halt = true;
-		console.log("HALT");
+	var ks = 0;
+
+	for (let i=0; i < uniquesPressed.length; i++) {
+		var k = (uniquesPressed[i] in keyTable)?keyTable[uniquesPressed[i]]:keyTable["nokey"];
+		ks |= k;
 	}
 	
-	return cols;
+	return ks;
 }
 
 var keyboardMapping = {

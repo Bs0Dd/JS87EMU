@@ -42,7 +42,7 @@ function KBKeyPress(evt) {
 	}
 
 	// find the key in mapping
-	if((uniquesPressed.indexOf(key) == -1)&&(uniquesPressed.length < 2)&&(key!=trkey)) {
+	if((uniquesPressed.indexOf(key) == -1)&&(key!=trkey)) {
 		if((key=="on")&&(!MK85CPU.flag_halt)) MK85CPU.flag_halt = true;
 		uniquesPressed.push(key);
 		console.log("Pressed", key, uniquesPressed);
@@ -82,7 +82,7 @@ function GUIKeyPress(evt) {
 		devicePower(key=="on");
 	}
 
-	if((uniquesPressed.indexOf(key) == -1)&&(uniquesPressed.length < 2)) {
+	if(uniquesPressed.indexOf(key) == -1) {
 		if((key=="on")&&(!MK85CPU.flag_halt)) MK85CPU.flag_halt = true;
 		uniquesPressed.push(key);
 		console.log(uniquesPressed);
