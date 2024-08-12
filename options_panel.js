@@ -172,9 +172,9 @@ function panelOpenHelp() {
 }
 
 function panelOpenDbg() {
-    const hidp = document.getElementById("mk85_dbg_int");
+    const hidp = document.getElementById("mk87_dbg_int");
     hidp.style.display = (hidp.style.display == "none") ? "" : "none";
-    document.getElementById("mk85_dbg_br").style.display = hidp.style.display;
+    document.getElementById("mk87_dbg_br").style.display = hidp.style.display;
     var active = (!stopped && POWER);
     if (hidp.style.display == "" && active) {
         DBG.debugStart();
