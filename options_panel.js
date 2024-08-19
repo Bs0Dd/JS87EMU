@@ -93,6 +93,14 @@ function PANEL() {
 
     return pnl;
 }
+
+function panelOnEnter(th, kc, fun) {
+    if (kc == 13) {
+        th.blur();
+        fun();
+    }
+}
+
 function panelSetRTWa() {
     WATCH.stop();
     WATCH.run();
@@ -233,6 +241,8 @@ function panelUnStop() {
     document.getElementById("dbst").disabled = true;
     document.getElementById("dbsts").disabled = true;
     document.getElementById("dbbr").disabled = true;
+    document.getElementById("stps").disabled = true;
+    document.getElementById("brkp").disabled = true;
     document.getElementById("regist").disabled = true;
     document.getElementById("reged").disabled = true;
     document.getElementById("edreg").disabled = true;
@@ -366,6 +376,8 @@ function panelSwState(stat) {
     document.getElementById("dbst").disabled = !stopped;
 	document.getElementById("dbsts").disabled = !stopped;
 	document.getElementById("dbbr").disabled = !stopped;
+    document.getElementById("stps").disabled = !stopped;
+    document.getElementById("brkp").disabled = !stopped;
     document.getElementById("regist").disabled = !stopped;
     document.getElementById("reged").disabled = !stopped;
     document.getElementById("edreg").disabled = !stopped;

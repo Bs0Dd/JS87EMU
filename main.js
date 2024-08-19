@@ -14,7 +14,7 @@ window.onload = function() {
 	//DBG.debugStart();
 };
 
-var VERVAR = "1.5 - build 12.08.2024"
+var VERVAR = "1.52 - build 19.08.2024"
 
 var supportsVibrate = "vibrate" in navigator;
 
@@ -44,6 +44,7 @@ var DBG = new DBGTOOL();
 
 var DEBUG_STEPS = false;
 var BREAKPOINT = false;
+var SKIPBSTEP = false;
 
 var ignorePowerOff = loadProperty('mk87_ignorepoff', false, true);
 

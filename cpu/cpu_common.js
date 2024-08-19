@@ -44,7 +44,7 @@ function CPU() {
     /* gotta assign those before running anything */   
 	this.readCallback   = null;
     this.writeCallback  = null;
-	this.steps  = null;
+	this.steps          = null;
 }
 
 CPU.prototype.access = function(addr,writeVal,isByte) {
@@ -110,7 +110,7 @@ CPU.prototype.execCode = function() {
 	
 	if((this.cpuctrl&0x0400)==0) return CPU.prototype.execCode;
 
-	if ((typeof BREAKPOINT == "number") && BREAKPOINT==this.reg_u16[7]) {
+	if ((typeof BREAKPOINT == "number") && BREAKPOINT==this.reg_u16[7] && !SKIPBSTEP) {
 		BREAKPOINT = -1;
 		return CPU.prototype.execCode;
 	}
@@ -139,8 +139,9 @@ CPU.prototype.execCode = function() {
 		if(this.flag_halt||this.flag_evnt) this.flag_wait = false;
 		if(this.flag_step||((this.psw&this.flags.H)!=0)) this.flag_halt =false;
 		this.step_flag = false;
+		if (this.flag_wait) {return CPU.prototype.execCode};
 
-		if(this.flag_evnt) throw this.vectors.TRAP_EVNT;
+		if (this.flag_evnt && ((this.psw&this.flags.I)==0)) {this.flag_evnt = false; throw this.vectors.TRAP_EVNT;}
 		else if (this.flag_halt) {
 			this.flag_halt = false;
 			return this.makeDC0(0x0000);
