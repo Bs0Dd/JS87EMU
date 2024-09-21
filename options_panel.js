@@ -302,16 +302,7 @@ function panelLoadRaF() {
 
         RAM = new Uint8Array(reader.result);
 
-        if (RAM.length > 2048) {  // 2KB max size for firmware
-            RAM = RAM.subarray(0, 2048);
-            console.log("Maximum RAM memory size (for firmware) is 2KB, memory area reduced");
-        }
-        else if (RAM.length % 2048 != 0) {  // Real processor uses a RAM chips multiple of 2KB min
-            var nRAM = new Uint8Array((Math.floor(RAM.length / 2048)+1)*2048);
-            nRAM.set(RAM);
-            RAM = nRAM;
-            console.log(`The RAM size must be a multiple of 2KB, increasing the area to ${RAM.length / 1024}KB.`);
-        }
+        RAMbou();
 
         ramname = ramf.name;
         window.localStorage.setItem('mk87_ram', btoa(String.fromCharCode.apply(null, RAM)));

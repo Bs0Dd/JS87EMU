@@ -92,6 +92,11 @@
     &nbsp;&nbsp;&nbsp;&nbsp;To load RAM from a <b>binary file</b>, just <b>select the file</b> (using the <b>button</b> or via <b>Drag'n'Drop</b>)
     and press the <b>"Load RAM from file"</b> button. The file <b>must</b> be <b>2KB</b>.
     If the <b>condition</b> is not met, the image will be automatically reduced to <b>2KB</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>RAM</b> can also be loaded from a <b>network link</b> using the <b>URL</b> argument <b>ram</b>.
+    <b>For example:</b> http://example.com/emu.html?<b>ram=http://example.com/ram.bin</b>.
+    If the emulator has <b>saved RAM</b>, before loading, the user needs to <b>confirm</b> that he agrees to load the RAM from
+    <b>network link</b>, as this will result in <b>loss</b> of the saved RAM. Using the <b>fload=force</b> parameter you can <b>disable</b> confirmation,
+    but adding the parameter to <b>public links</b> is strictly <b>not recommended</b>!<br>
     &nbsp;&nbsp;&nbsp;&nbsp;You can get the <b>binary file</b> of the <b>RAM</b> image by clicking the <b>"Save RAM"</b> button, and the browser will download the <b>"mk87_ram.bin"</b> file.<br>
 </p><br>
 

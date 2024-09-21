@@ -10,11 +10,15 @@ window.onload = function() {
 	document.getElementById("mk87").appendChild(GUI);
 	document.getElementById("mk87_panel").appendChild(PAN);
 	document.getElementById("mk87_dbg").appendChild(DBG);
-	PAN.ramName();
+	if ((!extram || eramd)){
+		PAN.ramName();
+	}
+	
+	pagld = true;
 	//DBG.debugStart();
 };
 
-var VERVAR = "1.52 - build 19.08.2024"
+var VERVAR = "1.6 - build 21.09.2024"
 
 var supportsVibrate = "vibrate" in navigator;
 
@@ -62,31 +66,85 @@ var ROM = null;
 var POWER = true;
 var PAUSE_ON_HID = false;
 
+function extrun() {
+	if (extram && pagld) {
+		PAN.ramName();
+	}
+	startEmu();
+}
+
 // Load RAM and ROM contents
+
+function ramlo() {
+	if(ram == null) {
+		console.log("Creating new RAM memory file");
+		RAM = new Uint8Array(2048);
+		ramname = "internal";
+		setTimeout(panelInitMem, 500);
+		//loadBinary("ram.bin", function (buf) { RAM = new Uint8Array(buf); checkIfMemoryLoaded(); });
+	} else {
+		console.log("Getting RAM contents from local storage");
+	
+		if (ramname == null) {
+			ramname = "internal";
+		}
+	
+		RAM = new Uint8Array(base64ToArrayBuffer(ram));
+	}
+}
 
 var ram = window.localStorage.getItem('mk87_ram');
 var ramname = window.localStorage.getItem('mk87_ramname');
 
-if(ram == null) {
-	console.log("Creating new RAM memory file");
-	RAM = new Uint8Array(2048);
-	ramname = "internal";
-	setTimeout(panelInitMem, 500);
-	//loadBinary("ram.bin", function (buf) { RAM = new Uint8Array(buf); checkIfMemoryLoaded(); });
-} else {
-	console.log("Getting RAM contents from local storage");
+var urargs = parseURLParams(window.location.href);
+var extram = false;
+var eramd = false;
 
-	if (ramname == null) {
-		ramname = "internal";
+var pagld = false;
+
+if (urargs && urargs.ram) {
+	var ract = true;
+	if (ram != null && !(urargs.fload && urargs.fload=="force")) {
+		ract = confirm('You are going to load RAM from the link and the old RAM will be lost. \
+If the data in it is important to you, interrupt the load and save the old RAM.')
 	}
-
-	RAM = new Uint8Array(base64ToArrayBuffer(ram));
+	
+	if (ract) {	
+		console.log('Ext RAM load started.');
+		extram = true;
+		ramname = urargs.ram.toString().split('/').pop();
+		loadBinaryHTTP(urargs.ram,
+		function (buf) {
+			RAM = new Uint8Array(buf);
+			RAMbou();
+			eramd = true;
+			window.localStorage.setItem('mk87_ram', btoa(String.fromCharCode.apply(null, RAM)));
+			window.localStorage.setItem('mk87_ramname', ramname);
+			extrun();
+		},
+		function () {
+			extram = false;
+			ramname = window.localStorage.getItem('mk87_ramname');
+			alert("Failed to load RAM from the link, loading old RAM...");
+			ramlo();
+			eramd = true;
+			extrun();
+		},);
+	} else {
+		console.log('Ext RAM load interrupted.');
+		ramlo();
+	}
+}
+else {
+	ramlo();
 }
 
 console.log("Loading internal ROM memory file");
 ROM = new Uint8Array(ROM_int); // Internal ROM image constant
 
-startEmu();
+if (!extram) {
+	startEmu();
+}
 
 
 document.addEventListener("visibilitychange", () => {
