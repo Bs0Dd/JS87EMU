@@ -56,27 +56,73 @@ function WATCH51(parentSVG) {
 
     parentSVG.appendChild(svg);
 
+
+    function w1touchs(evt) {
+        if (evt.cancelable) evt.preventDefault();
+        W51_bt1p = true;
+        W51_bt1.setAttributeNS(null,"opacity",1);
+    }
+
+    function w1touche(evt) {
+        if (evt.cancelable) evt.preventDefault();
+        W51_bt1p = false;
+        W51_bt1.setAttributeNS(null,"opacity",0);
+    }
+
+    var W51_bt1g = document.createElementNS(svgNS, "g");
+	W51_bt1g.setAttributeNS(null,"cursor","pointer");
+
     var W51_bt1 = document.createElementNS(svgNS,'image');
 	W51_bt1.setAttributeNS('http://www.w3.org/1999/xlink','href', `${BASEPATH}/bitmaps/watch_b.png`);
 	W51_bt1.setAttributeNS(null,'x','381');
 	W51_bt1.setAttributeNS(null,'y','221');
+	W51_bt1.setAttributeNS(null, "opacity", 0);
 	W51_bt1.setAttributeNS(null, 'visibility', 'visible');
-    W51_bt1.setAttributeNS(null,"opacity",0);
-    W51_bt1.setAttributeNS(null,"cursor","pointer");
-    W51_bt1.onmousedown = function() {W51_bt1p = true; this.setAttributeNS(null,"opacity",1);};
-    W51_bt1.onmouseup = function() {W51_bt1p = false; this.setAttributeNS(null,"opacity",0);};
-	parentSVG.appendChild(W51_bt1);
+	parentSVG.append(W51_bt1);
+	W51_bt1g.appendChild(W51_bt1);
+
+	W51_bt1g.addEventListener("touchstart", w1touchs, false);
+	W51_bt1g.addEventListener("touchend", w1touche, false);
+
+	W51_bt1g.addEventListener("mousedown",w1touchs, false);
+	W51_bt1g.addEventListener("mouseup",w1touche, false);
+	W51_bt1g.addEventListener("mouseout",w1touche, false);
+
+	parentSVG.appendChild(W51_bt1g);
+
+
+    function w2touchs(evt) {
+        if (evt.cancelable) evt.preventDefault();
+        W51_bt2p = true;
+        W51_bt2.setAttributeNS(null,"opacity",1);
+    }
+
+    function w2touche(evt) {
+        if (evt.cancelable) evt.preventDefault();
+        W51_bt2p = false;
+        W51_bt2.setAttributeNS(null,"opacity",0);
+    }
+
+    var W51_bt2g = document.createElementNS(svgNS, "g");
+	W51_bt2g.setAttributeNS(null,"cursor","pointer");
 
     var W51_bt2 = document.createElementNS(svgNS,'image');
 	W51_bt2.setAttributeNS('http://www.w3.org/1999/xlink','href', `${BASEPATH}/bitmaps/watch_b.png`);
 	W51_bt2.setAttributeNS(null,'x','381');
 	W51_bt2.setAttributeNS(null,'y','276');
+	W51_bt2.setAttributeNS(null, "opacity", 0);
 	W51_bt2.setAttributeNS(null, 'visibility', 'visible');
-    W51_bt2.setAttributeNS(null,"opacity",0);
-    W51_bt2.setAttributeNS(null,"cursor","pointer");
-    W51_bt2.onmousedown = function() {W51_bt2p = true; this.setAttributeNS(null,"opacity",1);};
-    W51_bt2.onmouseup = function() {W51_bt2p = false; this.setAttributeNS(null,"opacity",0);};
-	parentSVG.appendChild(W51_bt2);
+	parentSVG.append(W51_bt2);
+	W51_bt2g.appendChild(W51_bt2);
+
+	W51_bt2g.addEventListener("touchstart", w2touchs, false);
+	W51_bt2g.addEventListener("touchend", w2touche, false);
+
+	W51_bt2g.addEventListener("mousedown",w2touchs, false);
+	W51_bt2g.addEventListener("mouseup",w2touche, false);
+	W51_bt2g.addEventListener("mouseout",w2touche, false);
+
+	parentSVG.appendChild(W51_bt2g);
 
     var W51_bt1p = false;
     var W51_bt2p = false;
