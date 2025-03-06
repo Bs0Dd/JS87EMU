@@ -324,21 +324,6 @@ function debugDisSet() {
     }
 }
 
-function debugDisClick(obj) {
-    if (POWER && !stopped) {
-        return;
-    }
-
-    var adrcell = obj;
-    if (obj.id[obj.id.length-1] != "a") {
-        adrcell = document.getElementById(obj.id+"a")
-    }
-
-    document.getElementById("disgo").value = adrcell.innerText.substring(0, adrcell.innerText.length-1);
-
-    debugDisRead();
-}
-
 function debugRegClick(obj) {
     if (!stopped) {
         return;
@@ -364,6 +349,21 @@ function debugRegClick(obj) {
     var reged = document.getElementById("reged");
     reged.focus();
     reged.setSelectionRange(0, 10);
+}
+
+function debugDisClick(obj) {
+    if (POWER && !stopped) {
+        return;
+    }
+
+    var adrcell = obj;
+    if (obj.id[obj.id.length-1] != "a") {
+        adrcell = document.getElementById(obj.id+"a")
+    }
+
+    document.getElementById("disgo").value = adrcell.innerText.substring(0, adrcell.innerText.length-1);
+
+    debugDisRead();
 }
 
 function debugDisRead() {
@@ -708,7 +708,7 @@ function debugBreakp() {
         debugClearB();
         return;
     }
-    BREAKPOINT = parseInt(document.getElementById("brkp").value, RAMOCT ? 8 : 16);
+    BREAKPOINT = parseInt(document.getElementById("brkp").value, REGOCT ? 8 : 16);
     if (BREAKPOINT == MK85CPU.reg_u16[7]) {
         SKIPBSTEP = true;
     }
